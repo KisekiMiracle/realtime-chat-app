@@ -25,9 +25,9 @@ export function useChat({ roomId, user_id, name }: UseChatOptions) {
 
   useEffect(() => {
     ws.current = new WebSocket(
-      `ws://${
-        process.env.NEXT_PUBLIC_WEBSOCKET_URL!.split("http://")[1] ??
-        process.env.NEXT_PUBLIC_WEBSOCKET_URL!.split("https://")[1]
+      `${
+        process.env.NEXT_PUBLIC_WEBSOCKET_URL! ??
+        process.env.NEXT_PUBLIC_WEBSOCKET_URL!
       }/chat/${roomId}`,
     );
 
