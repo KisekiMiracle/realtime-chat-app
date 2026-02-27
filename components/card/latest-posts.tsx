@@ -11,11 +11,28 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
+import { client } from "@/app/api/[[...slugs]]/route";
 
 export default async function LatestPostsCard() {
   const latestPosts = (
-    await axios.get(`${process.env.BACKEND_URL}/api/posts/latest`)
-  ).data;
+    await client.query(/* sql */ `
+      SELECT 
+        forum_posts.id,
+        forum_posts.title,
+        forum_posts.reply_count,
+        forum_posts.views,
+        forum_posts.last_reply_at,
+        forum_posts.created_at,
+        u1.name AS author_name,
+        fc.name AS category_name,
+        fc.slug AS category_slug
+      FROM forum_posts
+      LEFT JOIN "user" u1 ON forum_posts.author_id = u1.id
+      LEFT JOIN forum_categories fc ON forum_posts.category_id = fc.id
+      ORDER BY COALESCE(forum_posts.last_reply_at, forum_posts.created_at) DESC
+      LIMIT 8
+    `)
+  ).rows;
 
   return (
     <Card>
