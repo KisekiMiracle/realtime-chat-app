@@ -1,4 +1,6 @@
+import ForumCategories from "@/components/card/forum-categories";
 import LatestPostsCard from "@/components/card/latest-posts";
+import { Footer2 } from "@/components/footer2";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, CirclePlay } from "lucide-react";
@@ -17,11 +19,15 @@ export default function Home() {
         <Hero />
       </section>
       <section className="self-center w-full max-w-(--breakpoint-xl) px-4 sm:px-6 lg:px-8">
-        <div style={{ display: "grid", gridTemplateColumns: "0.7fr 0.3fr" }}>
-          <div />
+        <div
+          style={{ gridTemplateColumns: "0.6fr 0.4fr" }}
+          className="md:grid flex flex-col gap-4 md:gap-12"
+        >
+          <ForumCategories />
           <LatestPostsCard />
         </div>
       </section>
+      <Footer2 className="self-center w-full max-w-(--breakpoint-xl) px-4 sm:px-6 lg:px-8" />
     </div>
   );
 }

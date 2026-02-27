@@ -14,7 +14,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { hover, animate } from "motion/react";
 import FeatherIcon from "feather-icons-react";
@@ -29,7 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export const NavMenu = (props: ComponentProps<typeof NavigationMenu>) => (
-  <div className="flex items-center gap-4 mt-2">
+  <div className={cn("flex items-center gap-4 mt-2", props.className)}>
     {/* Regular links outside NavigationMenu */}
     <NavLink
       label="Home"

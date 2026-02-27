@@ -38,7 +38,7 @@ export default async function LatestPostsCard() {
   ).rows;
 
   return (
-    <Card>
+    <Card className="h-fit">
       <CardHeader>
         <CardTitle>Latest Posts</CardTitle>
         <CardDescription>
@@ -56,18 +56,20 @@ export default async function LatestPostsCard() {
       <CardContent>
         <div className="flex flex-col gap-2">
           {latestPosts.map((post: Record<string, string>) => (
-            <Link href={`/posts/${post.id}`}>
+            <Link href={`/posts/${post.id}`} key={`id-post-${post.id}`}>
               <Card>
                 <CardHeader>
-                  <CardTitle>{post.title}</CardTitle>
+                  <CardTitle className="underline">{post.title}</CardTitle>
                   <CardDescription>{post.content}</CardDescription>
                 </CardHeader>
                 <CardFooter className="flex items-center gap-1 text-xs">
-                  <span>
-                    Last reply at:
+                  <span className="inline-flex items-center gap-1">
+                    Last reply at
                     <time>{new Date(post.last_reply_at).toDateString()}</time>
                   </span>
-                  <span>by {post.last_reply_by_name}</span>
+                  <span className="font-semibold">
+                    by {post.last_reply_by_name}
+                  </span>
                 </CardFooter>
               </Card>
             </Link>

@@ -18,14 +18,14 @@ const Navbar = () => {
           <Logo />
 
           {/* Desktop Menu */}
-          <NavMenu className="hidden md:block" />
+          <NavMenu className="hidden lg:flex" />
         </div>
 
         <div className="flex items-center gap-3">
           <UserButton />
 
           {/* Mobile Menu */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <NavigationSheet />
           </div>
         </div>
