@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const protectedRoutes = ["/chat", "/chat"];
-const publicRoutes = ["/signup", "/signin", "/"];
+const publicRoutes = ["/signup", "/signin"];
 
 export default async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -38,7 +38,7 @@ export default async function proxy(req: NextRequest) {
     }
 
     const user = session.user;
-    if (isPublicRoute && user.id && !req.nextUrl.pathname.startsWith("/chat")) {
+    if (isPublicRoute && user.id) {
       return NextResponse.redirect(new URL("/chat", req.nextUrl));
     }
 

@@ -24,7 +24,7 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [user, setUser] = useState<Record<string, any> | null>(null);
+  const [user, setUser] = useState<Record<string, any> | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -39,6 +39,8 @@ export default function Layout({
         setIsLoading(false);
       } catch (error) {
         console.error(error);
+        setUser(undefined);
+        setIsLoading(false);
       }
     };
     getUser();

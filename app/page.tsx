@@ -1,6 +1,9 @@
-import SignupForm from "@/components/form/signup-form";
-import Navbar from "@/components/navbar/navbar";
+import LatestPostsCard from "@/components/card/latest-posts";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight, CirclePlay } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Home | Tamber",
@@ -9,9 +12,57 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <section className="w-full flex flex-col">
-      <Navbar />
-      <h1>Home</h1>
-    </section>
+    <div className="flex flex-col">
+      <section className="self-center w-full max-w-(--breakpoint-xl) px-4 sm:px-6 lg:px-8">
+        <Hero />
+      </section>
+      <section className="self-center w-full max-w-(--breakpoint-xl) px-4 sm:px-6 lg:px-8">
+        <div style={{ display: "grid", gridTemplateColumns: "0.7fr 0.3fr" }}>
+          <div />
+          <LatestPostsCard />
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <div className="flex items-center justify-center">
+      <div className="mx-auto grid w-full max-w-(--breakpoint-xl) gap-12 py-12 lg:grid-cols-2">
+        <div>
+          <Badge
+            asChild
+            className="rounded-full border-border py-1"
+            variant="secondary"
+          >
+            <Link href="#">
+              Just released v1.0.0 <ArrowUpRight className="ml-1 size-4" />
+            </Link>
+          </Badge>
+          <h1 className="mt-6 max-w-[17ch] font-semibold text-4xl leading-[1.2]! tracking-[-0.035em] md:text-5xl lg:text-[2.75rem] xl:text-[3.25rem]">
+            Customized Shadcn UI Blocks & Components
+          </h1>
+          <p className="mt-6 max-w-[60ch] text-foreground/80 sm:text-lg">
+            Explore a collection of Shadcn UI blocks and components, ready to
+            preview and copy. Streamline your development workflow with
+            easy-to-implement examples.
+          </p>
+          <div className="mt-12 flex items-center gap-4">
+            <Button className="rounded-full text-base" size="lg">
+              Get Started <ArrowUpRight className="h-5! w-5!" />
+            </Button>
+            <Button
+              className="rounded-full text-base shadow-none"
+              size="lg"
+              variant="outline"
+            >
+              <CirclePlay className="h-5! w-5!" /> Watch Demo
+            </Button>
+          </div>
+        </div>
+        <div className="aspect-video w-full rounded-xl bg-accent" />
+      </div>
+    </div>
   );
 }

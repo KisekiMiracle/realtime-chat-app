@@ -38,6 +38,45 @@ app.get("/test/params/:id", async ({ params: { id } }) => {
   return { success: true, response: res.rows };
 });
 // =======================================
+// NOTE: POST API ROUTES
+// =======================================
+app.get("/posts/latest", async ({ set }) => {
+  try {
+    const latestPosts = (
+      await client.query(/* sql */ `
+        SELECT 
+          forum_posts.id,
+          forum_posts.title,
+          forum_posts.content,
+          forum_posts.views,
+          forum_posts.reply_count,
+          forum_posts.is_pinned,
+          forum_posts.is_locked,
+          forum_posts.created_at,
+          forum_posts.last_reply_at,
+          u1.name AS author_name,
+          u2.name AS last_reply_by_name,
+          fc.name AS category_name,
+          fc.slug AS category_slug
+        FROM forum_posts
+        LEFT JOIN "user" u1 ON forum_posts.author_id = u1.id
+        LEFT JOIN "user" u2 ON forum_posts.last_reply_by = u2.id
+        LEFT JOIN forum_categories fc ON forum_posts.category_id = fc.id
+        ORDER BY COALESCE(forum_posts.last_reply_at, forum_posts.created_at) DESC
+        LIMIT 8;
+    `)
+    ).rows;
+    console.log("tried to fecth posts", latestPosts);
+
+    set.status = 201;
+    return latestPosts;
+  } catch (error) {
+    set.status = 500;
+    console.error(error);
+    return { error: `Something unexpected happened. Reason: ${error}` };
+  }
+});
+// =======================================
 // NOTE: AUTH API ROUTES
 // =======================================
 app.post(
